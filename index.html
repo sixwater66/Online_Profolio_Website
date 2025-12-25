@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Sketchy World</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#01FF6F', // Vibrant Emphasis Green
+              neutral: '#f5ffe0', // Pale background
+              accent: '#EDD297',  // Sand/Gold
+              secondary: '#CDE4AA', // Sage
+              ink: '#2d2d2d',
+            },
+            fontFamily: {
+              hand: ['"Patrick Hand"', 'cursive'],
+            },
+            animation: {
+              'wobble-slow': 'wobble 4s ease-in-out infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'draw': 'draw 1s forwards',
+              'twitch': 'twitch 0.3s steps(2) infinite',
+              'jerk': 'jerk 2s steps(4) infinite',
+              'sway': 'sway 3s ease-in-out infinite',
+            },
+            keyframes: {
+              wobble: { '0%, 100%': { transform: 'rotate(-1deg)' }, '50%': { transform: 'rotate(1deg)' } },
+              float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+              twitch: { '0%': { transform: 'translate(0, 0) rotate(0deg)' }, '25%': { transform: 'translate(1px, 1px) rotate(0.5deg)' }, '50%': { transform: 'translate(-1px, 0) rotate(-0.5deg)' }, '75%': { transform: 'translate(0, -1px) rotate(0deg)' }, '100%': { transform: 'translate(0, 0) rotate(0deg)' } },
+              jerk: { '0%': { transform: 'scale(1) rotate(0deg)' }, '25%': { transform: 'scale(1.01) rotate(1deg)' }, '50%': { transform: 'scale(0.99) rotate(-1deg)' }, '75%': { transform: 'scale(1.01) rotate(0.5deg)' }, '100%': { transform: 'scale(1) rotate(0deg)' } },
+              sway: { '0%, 100%': { transform: 'skewX(0deg)' }, '50%': { transform: 'skewX(-5deg)' } }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Custom CSS Styles -->
+    <style>
+      .rough-border { filter: url('#rough-paper'); }
+      body { 
+        background-color: #f5ffe0; 
+        overflow-x: hidden; 
+        cursor: crosshair; 
+        color: #2d2d2d;
+      }
+      
+      ::selection {
+        background-color: rgba(1, 255, 111, 0.3);
+      }
+
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: #f5ffe0; }
+      ::-webkit-scrollbar-thumb { 
+        background: #01FF6F; 
+        border-radius: 10px; 
+        border: 2px solid #f5ffe0;
+      }
+      
+      .animate-draw {
+        animation: fadeIn 0.5s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .map-container::-webkit-scrollbar {
+        width: 10px;
+      }
+      .map-container::-webkit-scrollbar-thumb {
+        background: #01FF6F;
+        border: 2px solid #f5ffe0;
+        border-radius: 10px;
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+    <svg style="visibility: hidden; position: absolute;" width="0" height="0">
+      <defs>
+        <filter id="rough-paper">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+        </filter>
+      </defs>
+    </svg>
+</body>
+</html>
