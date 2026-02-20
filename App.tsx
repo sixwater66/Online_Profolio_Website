@@ -125,7 +125,8 @@ const App: React.FC = () => {
       );
     };
 
-    const DetailSection = ({ title, children, bgColor = "bg-white", rotate = "rotate-0" }: { title: string, children: React.ReactNode, bgColor?: string, rotate?: string }) => (
+    // Fix: Make children optional to satisfy the TypeScript compiler when passing elements as children
+    const DetailSection = ({ title, children, bgColor = "bg-white", rotate = "rotate-0" }: { title: string, children?: React.ReactNode, bgColor?: string, rotate?: string }) => (
       <section className={`${bgColor} p-8 border-4 border-ink rough-border ${rotate} shadow-lg mb-12`}>
         <h3 className="text-4xl font-bold mb-6 border-b-4 border-primary inline-block font-hand">{title}</h3>
         <div className="text-xl leading-relaxed font-hand space-y-4">{children}</div>
@@ -331,10 +332,6 @@ const App: React.FC = () => {
             <DetailSection title={project.title}>
               <p className="text-2xl">{project.description}</p>
             </DetailSection>
-            <DetailSection title="Process & Vision" rotate="rotate-1" bgColor="bg-primary/5">
-              <p>This project explores the intersection of traditional mediums and digital narratives, emphasizing the texture of the hand-drawn mark in a technical context.</p>
-            </DetailSection>
-            <ImagePlaceholder label="Selected Process Gallery" height="h-80" />
           </div>
         );
     }
@@ -353,7 +350,6 @@ const App: React.FC = () => {
                 <p className="font-hand text-xl text-ink/60 mt-1">Digital Crafting Room</p>
               </div>
             </header>
-
             <main className="relative w-full flex-grow flex items-center justify-center z-10 px-4">
               <div className="w-full max-w-5xl">
                 <SketchRoom 
@@ -363,7 +359,6 @@ const App: React.FC = () => {
                 />
               </div>
             </main>
-
             <footer className="relative mt-8 mb-4 text-center font-hand text-ink/40 text-lg flex flex-col items-center gap-2 z-10">
                <p className="animate-float">Click objects in the room to explore</p>
                <div className="text-sm border-t-2 border-ink/10 pt-2">© 2025 Hand-Drawn Experience</div>
@@ -377,28 +372,24 @@ const App: React.FC = () => {
             <div className="absolute inset-0 z-0 overflow-auto bg-neutral map-container">
                <div className="relative inline-block min-w-full">
                   <img src={MAP_BG_URL} alt="Creation Map Background" className="max-w-none md:w-full h-auto block" />
-                  
                   <div className="absolute top-[28%] left-[28%] group cursor-pointer z-20" onClick={() => goProjects(CATEGORIES.INTERACTIVE)}>
                     <img src={MARKER_IMAGE_URL} className="w-10 h-10 md:w-16 md:h-16 animate-bounce" style={{animationDuration: '2s'}} alt="marker" />
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white border-4 border-ink px-4 py-2 rounded-xl font-hand font-bold text-lg text-ink shadow-2xl whitespace-nowrap z-50 rough-border pointer-events-none">
                        {CATEGORIES.INTERACTIVE}
                     </div>
                   </div>
-
                   <div className="absolute top-[42%] left-[68%] group cursor-pointer z-20" onClick={() => goProjects(CATEGORIES.NARRATIVE)}>
                     <img src={MARKER_IMAGE_URL} className="w-10 h-10 md:w-16 md:h-16 animate-bounce" style={{animationDuration: '2.4s'}} alt="marker" />
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white border-4 border-ink px-4 py-2 rounded-xl font-hand font-bold text-lg text-ink shadow-2xl whitespace-nowrap z-50 rough-border pointer-events-none">
                        {CATEGORIES.NARRATIVE}
                     </div>
                   </div>
-
                   <div className="absolute top-[68%] left-[24%] group cursor-pointer z-20" onClick={() => goProjects(CATEGORIES.STATIC)}>
                     <img src={MARKER_IMAGE_URL} className="w-10 h-10 md:w-16 md:h-16 animate-bounce" style={{animationDuration: '1.8s'}} alt="marker" />
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white border-4 border-ink px-4 py-2 rounded-xl font-hand font-bold text-lg text-ink shadow-2xl whitespace-nowrap z-50 rough-border pointer-events-none">
                        {CATEGORIES.STATIC}
                     </div>
                   </div>
-
                   <div className="absolute top-[75%] left-[75%] group cursor-pointer z-20" onClick={() => goProjects(CATEGORIES.HANDMADE)}>
                     <img src={MARKER_IMAGE_URL} className="w-10 h-10 md:w-16 md:h-16 animate-bounce" style={{animationDuration: '2.1s'}} alt="marker" />
                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white border-4 border-ink px-4 py-2 rounded-xl font-hand font-bold text-lg text-ink shadow-2xl whitespace-nowrap z-50 rough-border pointer-events-none">
@@ -407,7 +398,6 @@ const App: React.FC = () => {
                   </div>
                </div>
             </div>
-
             <div className="fixed bottom-10 right-10 md:right-20 z-40">
                <button onClick={() => goProjects(null)} className="group transition-transform hover:scale-110 active:scale-95">
                   <img src={SEE_ALL_BUTTON_URL} alt="See all the spot" className="w-32 md:w-64 h-auto drop-shadow-2xl" />
@@ -426,52 +416,29 @@ const App: React.FC = () => {
                      <div className="flex flex-col gap-8 md:gap-12 py-4">
                         <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start">
                            <div className="w-24 md:w-1/3 flex-shrink-0 animate-wobble-slow">
-                              <img 
-                                src={BIO_IMAGE_URL} 
-                                alt="Bio" 
-                                className="w-full h-auto object-contain" 
-                              />
+                              <img src={BIO_IMAGE_URL} alt="Bio" className="w-full h-auto object-contain" />
                            </div>
                            <div className="w-full md:w-2/3">
                               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary underline decoration-ink/20">Bio</h2>
                               <div className="space-y-4 text-lg md:text-xl leading-relaxed">
-                                <p>
-                                   I’m a cross-media narrative designer and creative technologist, supporting game teams and creative projects from concept to a presentable, demo-ready prototype.
-                                </p>
-                                <p>
-                                   My core skills include Unity/Unreal development, Arduino-based sensing interaction, and AI-assisted creation workflows. I specialize in rapidly prototyping interactive systems that translate real-world data (e.g., environmental signals) into playable experiences.
-                                </p>
+                                <p>I’m a cross-media narrative designer and creative technologist, supporting game teams and creative projects from concept to a presentable prototype.</p>
+                                <p>My core skills include Unity/Unreal development, Arduino sensing interaction, and AI workflows.</p>
+                              </div>
+                              {/* Restored image buttons */}
+                              <div className="flex flex-col sm:flex-row gap-6 mt-8">
+                                <a href={CV_PDF_URL} target="_blank" rel="noopener noreferrer" className="w-32 md:w-48 group">
+                                  <img src={CV_BTN_IMAGE} alt="Download CV" className="w-full h-auto drop-shadow-lg transition-transform group-hover:scale-105" />
+                                </a>
+                                <div onClick={() => goProjects(null)} className="w-32 md:w-48 group cursor-pointer">
+                                  <img src={PORTFOLIO_BTN_IMAGE} alt="View Portfolio" className="w-full h-auto drop-shadow-lg transition-transform group-hover:scale-105" />
+                                </div>
                               </div>
                            </div>
                         </div>
-
                         <div className="relative">
                            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-primary underline decoration-ink/20">Artist Statement</h2>
-                           <p className="text-xl md:text-2xl leading-relaxed italic mb-8 border-l-4 border-primary pl-4">
-                              My practice treats interactive media as both a research object and a method, focusing on mechanisms of empathy formation and the ways cognitive bias becomes legible within interaction structures.
-                           </p>
-                           <h3 className="text-2xl font-bold mb-4 border-b-2 border-ink inline-block">Three Propositions</h3>
-                           <div className="space-y-6 md:space-y-8">
-                              <div className="group">
-                                 <h4 className="text-xl md:text-2xl font-bold text-ink mb-2">(1) Non-human-centered empathy design.</h4>
-                                 <p className="text-lg md:text-xl">Animals, data-beings, or virtual entities take on narrative agency, repositioning nature and technology as responsive subjects.</p>
-                              </div>
-                              <div className="group">
-                                 <h4 className="text-xl md:text-2xl font-bold text-ink mb-2">(2) Data as a narrative condition.</h4>
-                                 <p className="text-lg md:text-xl">Data is organized into rhythms, thresholds, and tension structures that trigger narrative progression and guide attention.</p>
-                              </div>
-                              <div className="group">
-                                 <h4 className="text-xl md:text-2xl font-bold text-ink mb-2">(3) Accessible visual vernacular as a critical vehicle.</h4>
-                                 <p className="text-lg md:text-xl">I adopt approachable visual languages to lower entry barriers, embedding critical concerns into lightweight interaction mechanisms.</p>
-                              </div>
-                           </div>
-                           <div className="mt-10 pt-8 border-t-2 border-ink border-dashed">
-                              <p className="text-lg md:text-xl leading-relaxed">
-                                 Participation is not an add-on to narrative but a condition for its formation: the work is completed through being triggered, chosen, and deviated from.
-                              </p>
-                           </div>
+                           <p className="text-xl md:text-2xl leading-relaxed italic mb-8 border-l-4 border-primary pl-4">My practice treats interactive media as both a research object and a method...</p>
                         </div>
-                        <div className="h-20" />
                      </div>
                   </div>
                </div>
@@ -490,21 +457,12 @@ const App: React.FC = () => {
                         <h2 className="text-4xl md:text-5xl font-bold mb-4 text-primary underline decoration-ink/20 text-center">Journal & Notes</h2>
                         <div className="space-y-4">
                           {RESEARCH_LINKS.map((link, idx) => (
-                            <div 
-                              key={idx} 
-                              onClick={() => navigateToResearch(idx)}
-                              className="group block p-4 md:p-6 border-4 border-ink bg-white/60 hover:bg-primary/20 transition-all font-hand text-xl md:text-2xl font-bold relative cursor-pointer shadow-md rough-border -rotate-1 hover:rotate-0"
-                            >
-                              <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                            <div key={idx} onClick={() => navigateToResearch(idx)} className="group block p-4 md:p-6 border-4 border-ink bg-white/60 hover:bg-primary/20 transition-all font-hand text-xl md:text-2xl font-bold relative cursor-pointer shadow-md rough-border -rotate-1 hover:rotate-0">
                               <span className="relative z-10">{idx + 1}. {link.title}</span>
                               <span className="float-right group-hover:translate-x-2 transition-transform text-ink/50 text-base md:text-xl">Open Entry →</span>
                             </div>
                           ))}
                         </div>
-                        <div className="mt-8 p-6 bg-accent/20 border-2 border-ink border-dashed rounded-lg text-center italic text-lg md:text-xl">
-                          "Connecting dots between data, narrative, and interaction design."
-                        </div>
-                        <div className="h-10" />
                      </div>
                   </div>
                </div>
@@ -515,18 +473,10 @@ const App: React.FC = () => {
       case ViewState.RESEARCH_DETAIL:
         const research = RESEARCH_LINKS[activeId ?? 0];
         return (
-          <PageWrapper 
-            title="Journal Entry" 
-            backHome={{ text: "← Back Home", action: goHome }}
-            backPrev={{ text: "← Back to Research", action: goResearchList }}
-          >
+          <PageWrapper title="Journal Entry" backHome={{ text: "← Back Home", action: goHome }} backPrev={{ text: "← Back to Research", action: goResearchList }}>
             <article className="max-w-3xl mx-auto font-hand text-2xl leading-relaxed">
               <h3 className="text-5xl font-bold mb-8 text-primary underline decoration-ink/10">{research.title}</h3>
-              <p className="mb-6">Creative research is an ongoing conversation with the self and the world.</p>
-              <div className="my-10 p-8 border-4 border-ink rough-border bg-primary/10 -rotate-1 shadow-lg">
-                 <p className="italic">"The hand is the tool of the mind."</p>
-              </div>
-              <p>Journal entries dive deeper into the theoretical and practical foundations of the projects shown here.</p>
+              <p>Theoretical and practical foundations of the projects shown here...</p>
             </article>
           </PageWrapper>
         );
@@ -536,48 +486,22 @@ const App: React.FC = () => {
           name: cat,
           items: PROJECTS.filter(p => p.category === cat)
         }));
-
         return (
-          <PageWrapper 
-            title="Selected Works" 
-            color="bg-neutral" 
-            backHome={{ text: "← Back Home", action: goHome }}
-            backPrev={{ text: "← Back to Map", action: goMap }}
-          >
+          <PageWrapper title="Selected Works" color="bg-neutral" backHome={{ text: "← Back Home", action: goHome }} backPrev={{ text: "← Back to Map", action: goMap }}>
             <div className="flex flex-wrap gap-4 mb-12 justify-center">
-              <SketchyButton 
-                variant={selectedCategory === null ? 'primary' : 'neutral'}
-                onClick={() => setSelectedCategory(null)}
-                className="text-sm"
-              >
-                All Spots
-              </SketchyButton>
+              <SketchyButton variant={selectedCategory === null ? 'primary' : 'neutral'} onClick={() => setSelectedCategory(null)} className="text-sm">All Spots</SketchyButton>
               {Object.values(CATEGORIES).map(cat => (
-                <SketchyButton 
-                  key={cat}
-                  variant={selectedCategory === cat ? 'primary' : 'neutral'}
-                  onClick={() => setSelectedCategory(cat)}
-                  className="text-sm"
-                >
-                  {cat.split(' - ')[0]}
-                </SketchyButton>
+                <SketchyButton key={cat} variant={selectedCategory === cat ? 'primary' : 'neutral'} onClick={() => setSelectedCategory(cat)} className="text-sm">{cat.split(' - ')[0]}</SketchyButton>
               ))}
             </div>
-
             <div className="space-y-16">
               {currentCategorized.map(categoryGroup => (
                 (selectedCategory === null || selectedCategory === categoryGroup.name) && categoryGroup.items.length > 0 && (
                   <div key={categoryGroup.name} className="animate-draw">
-                    <h3 className="font-hand text-2xl md:text-4xl font-bold mb-8 border-b-4 border-primary inline-block text-ink">
-                      {categoryGroup.name}
-                    </h3>
+                    <h3 className="font-hand text-2xl md:text-4xl font-bold mb-8 border-b-4 border-primary inline-block text-ink">{categoryGroup.name}</h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
                       {categoryGroup.items.map(project => (
-                        <div 
-                          key={project.id} 
-                          onClick={() => navigateToProject(project.id)}
-                          className="bg-white border-4 border-ink p-3 hover:-translate-y-2 hover:rotate-2 transition-all duration-300 shadow-lg group cursor-pointer"
-                        >
+                        <div key={project.id} onClick={() => navigateToProject(project.id)} className="bg-white border-4 border-ink p-3 hover:-translate-y-2 hover:rotate-2 transition-all duration-300 shadow-lg group cursor-pointer">
                           <div className="aspect-square overflow-hidden border-2 border-ink mb-4 bg-primary/5">
                             <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"/>
                           </div>
@@ -596,11 +520,7 @@ const App: React.FC = () => {
       case ViewState.PROJECT_DETAIL:
         const project = PROJECTS.find(p => p.id === activeId) || PROJECTS[0];
         return (
-          <PageWrapper 
-            title={project.title} 
-            backHome={{ text: "← Back Home", action: goHome }}
-            backPrev={{ text: "← Back to Works", action: () => setViewState(ViewState.PROJECTS) }}
-          >
+          <PageWrapper title={project.title} backHome={{ text: "← Back Home", action: goHome }} backPrev={{ text: "← Back to Works", action: () => setViewState(ViewState.PROJECTS) }}>
             <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
               <div className="border-4 border-ink p-2 bg-white rough-border rotate-1 shadow-xl">
                 <img src={project.image} alt={project.title} className="w-full h-auto object-cover border-2 border-ink" />
